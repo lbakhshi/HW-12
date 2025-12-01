@@ -1,6 +1,3 @@
--- send-pixart (FIXED)
--- Usage: send-pixart <logID>
-
 local args = { ... }
 if #args < 1 then
     print("Usage: send-pixart <logID>")
@@ -9,13 +6,12 @@ end
 
 local logID = args[1]
 local url = "https://cedar.fogcloud.org/api/logs/" .. logID
-local body = "line=white" -- Default to white so it never crashes
+local body = "line=white" 
 
 local function whatColor()
     for i = 1, 8 do    
         local success, data = turtle.inspectDown()
         
-        -- 1. ALWAYS reset body to white first
         body = "line=white"
 
         -- 2. Check for colors
@@ -29,30 +25,15 @@ local function whatColor()
             end
         end
         
-        -- 3. Send the data BEFORE moving
         print("Sending: " .. body)
         http.post(url, body)
         
-        -- 4. Move
         if i < 8 then -- Only move forward if not at the end of the line
             turtle.forward()
         end
     end
 end
 
--- Main Loop
-whatColor()
--- Turn Left (Up)
-turtle.turnLeft()
-turtle.forward()
-turtle.turnLeft()
-
-whatColor()
--- Turn Right (Up)
-turtle.turnRight()
-turtle.forward()
-turtle.turnRight()
-
 whatColor()
 turtle.turnLeft()
 turtle.forward()
@@ -79,5 +60,16 @@ turtle.forward()
 turtle.turnLeft()
 
 whatColor()
+turtle.turnRight()
+turtle.forward()
+turtle.turnRight()
+
+whatColor()
+turtle.turnLeft()
+turtle.forward()
+turtle.turnLeft()
+
+whatColor()
+
 
 print("Scan Complete")
